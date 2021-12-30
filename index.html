@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Material Toast</title>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <link rel="stylesheet" href="./dist/mdtoast.min.css" />
+        <script src="./dist/mdtoast.min.js"></script>
+    </head>
+    <body>
+        <b>Ubah Posisi</b><br/><br/>
+        <select id="ubahPosisi">
+			<optgroup label="Bagian atas :">	
+				<option value="top left">atas kiri</option>
+				<option value="top center">atas tengah</option>
+				<option value="top right">atas kanan</option>
+			</optgroup>
+			<optgroup label="Bagian bawah :">	
+				<option value="bottom left">bawah kiri</option>
+				<option value="bottom center">bawah tengah</option>
+				<option value="bottom right">bawah kanan</option>
+			</optgroup>
+		</select>
+
+        <br/><br/>
+        
+        <b>Ubah Tampilan</b><br/><br/>
+
+        <select id="ubahTampilan">
+            <option>default</option>
+            <option>info</option>
+            <option>error</option>
+            <option>success</option>
+            <option>warning</option>
+        </select>
+
+        <br/><br/>
+
+        <p>Klik button untuk lihat Toast dan Snackbar</p>
+        <button id="toast">Ini Toast</button> <button id="snackbar">Ini Snackbar</button>
+
+        <script>
+            window.onload = () =>
+            {
+                const ubahPosisi = () => {return document.querySelector('#ubahPosisi').value}
+                const ubahTampilan = () => {return document.querySelector('#ubahTampilan').value}
+
+                // Button #toast
+                document.getElementById('toast').addEventListener('click', () =>
+                {
+                    mdtoast('Ini tampilan Toast.', {
+                        duration: 8000, // waktu untuk auto hide
+                        position: ubahPosisi(),
+                        modal: false,
+                        type: ubahTampilan()
+                    });
+                })
+
+                // Button #snackbar
+                document.getElementById('snackbar').addEventListener('click', () => 
+                {
+                    mdtoast('Ini tampilan Snackbar', 
+                    {
+						interaction: true, 
+                        interactionTimeout: 8000, // waktu untuk auto hide (kalau interfaction: true)
+                        actionText: 'Tutup', 
+						position: ubahPosisi(),
+						action: function()
+                        {
+							alert('Berhasil menutup snackbar.');
+							this.hide();
+						},
+                        modal: false,
+                        type: ubahTampilan()
+					})
+                })
+            }
+        </script>
+    </body>
+</html>
